@@ -4,6 +4,8 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import in.co.mn.panda.activity.MainActivity;
+import in.co.mn.panda.fragment.JobDetailsFragment;
+import in.co.mn.panda.fragment.JobsFragment;
 
 /**
  * Created by manuMohan on 10/03/2016.
@@ -12,4 +14,8 @@ import in.co.mn.panda.activity.MainActivity;
 @Singleton
 public interface PandaComponent {
     void inject(MainActivity activity);
+
+    void inject(JobsFragment fragment);
+
+    void inject(JobDetailsFragment fragment);
 }

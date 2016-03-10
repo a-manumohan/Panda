@@ -1,11 +1,14 @@
 package in.co.mn.panda.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by manuMohan on 10/03/2016.
  */
-public class Job {
+public class Job implements Parcelable{
     @SerializedName("status")
     private String status;
 
@@ -181,4 +184,62 @@ public class Job {
     public void setJobStreet(String jobStreet) {
         this.jobStreet = jobStreet;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.status);
+        dest.writeString(this.customerName);
+        dest.writeString(this.distance);
+        dest.writeString(this.jobDate);
+        dest.writeString(this.extras);
+        dest.writeDouble(this.orderDuration);
+        dest.writeString(this.orderId);
+        dest.writeString(this.orderTime);
+        dest.writeString(this.paymentMethod);
+        dest.writeString(this.price);
+        dest.writeInt(this.recurrency);
+        dest.writeString(this.jobCity);
+        dest.writeString(this.jobLatitude);
+        dest.writeString(this.jobLongitude);
+        dest.writeString(this.jobPostalCode);
+        dest.writeString(this.jobStreet);
+    }
+
+    public Job() {
+    }
+
+    protected Job(Parcel in) {
+        this.status = in.readString();
+        this.customerName = in.readString();
+        this.distance = in.readString();
+        this.jobDate = in.readString();
+        this.extras = in.readString();
+        this.orderDuration = in.readDouble();
+        this.orderId = in.readString();
+        this.orderTime = in.readString();
+        this.paymentMethod = in.readString();
+        this.price = in.readString();
+        this.recurrency = in.readInt();
+        this.jobCity = in.readString();
+        this.jobLatitude = in.readString();
+        this.jobLongitude = in.readString();
+        this.jobPostalCode = in.readString();
+        this.jobStreet = in.readString();
+    }
+
+    public static final Creator<Job> CREATOR = new Creator<Job>() {
+        public Job createFromParcel(Parcel source) {
+            return new Job(source);
+        }
+
+        public Job[] newArray(int size) {
+            return new Job[size];
+        }
+    };
 }
