@@ -6,3 +6,10 @@
 .DS_Store
 /build
 /captures
+
+.idea/codeStyleSettings.xml
+
+
+.idea/misc.xml
+
+.idea/vcs.xml
