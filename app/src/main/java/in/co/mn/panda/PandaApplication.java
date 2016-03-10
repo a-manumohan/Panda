@@ -2,7 +2,7 @@ package in.co.mn.panda;
 
 import android.app.Application;
 
-import in.co.mn.panda.di.DaggerpandaComponent;
+import in.co.mn.panda.di.DaggerPandaComponent;
 import in.co.mn.panda.di.PandaComponent;
 import in.co.mn.panda.di.PandaModule;
 
@@ -16,9 +16,9 @@ public class PandaApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        pandaComponent = DaggerpandaComponent
+        pandaComponent = DaggerPandaComponent
                 .builder()
-                .pandaModule(new PandaModule())
+                .pandaModule(new PandaModule(this))
                 .build();
     }
 

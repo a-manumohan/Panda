@@ -13,7 +13,7 @@ public class Job {
     private String customerName;
 
     @SerializedName("distance")
-    private double distance;
+    private String distance;
 
     @SerializedName("job_date")
     private String jobDate;
@@ -22,7 +22,7 @@ public class Job {
     private String extras;
 
     @SerializedName("order_duration")
-    private int orderDuration;
+    private double orderDuration;
 
     @SerializedName("order_id")
     private String orderId;
@@ -34,7 +34,7 @@ public class Job {
     private String paymentMethod;
 
     @SerializedName("price")
-    private double price;
+    private String price;
 
     @SerializedName("recurrency")
     private int recurrency;
@@ -43,10 +43,10 @@ public class Job {
     private String jobCity;
 
     @SerializedName("job_latitude")
-    private double jobLatitude;
+    private String jobLatitude;
 
     @SerializedName("job_longitude")
-    private double jobLongitude;
+    private String jobLongitude;
 
     @SerializedName("job_postalcode")
     private String jobPostalCode;
@@ -70,11 +70,11 @@ public class Job {
         this.customerName = customerName;
     }
 
-    public double getDistance() {
+    public String getDistance() {
         return distance;
     }
 
-    public void setDistance(double distance) {
+    public void setDistance(String distance) {
         this.distance = distance;
     }
 
@@ -94,11 +94,11 @@ public class Job {
         this.extras = extras;
     }
 
-    public int getOrderDuration() {
+    public double getOrderDuration() {
         return orderDuration;
     }
 
-    public void setOrderDuration(int orderDuration) {
+    public void setOrderDuration(double orderDuration) {
         this.orderDuration = orderDuration;
     }
 
@@ -126,11 +126,11 @@ public class Job {
         this.paymentMethod = paymentMethod;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -150,19 +150,19 @@ public class Job {
         this.jobCity = jobCity;
     }
 
-    public double getJobLatitude() {
+    public String getJobLatitude() {
         return jobLatitude;
     }
 
-    public void setJobLatitude(double jobLatitude) {
+    public void setJobLatitude(String jobLatitude) {
         this.jobLatitude = jobLatitude;
     }
 
-    public double getJobLongitude() {
+    public String getJobLongitude() {
         return jobLongitude;
     }
 
-    public void setJobLongitude(double jobLongitude) {
+    public void setJobLongitude(String jobLongitude) {
         this.jobLongitude = jobLongitude;
     }
 
