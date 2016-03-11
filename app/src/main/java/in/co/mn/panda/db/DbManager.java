@@ -27,6 +27,7 @@ public class DbManager {
     public void persist(Job job) {
         mRealm.beginTransaction();
         JobDAO jobDAO = JobDAO.fromJob(job);
+        mRealm.copyToRealmOrUpdate(jobDAO);
         mRealm.commitTransaction();
     }
 
@@ -34,6 +35,7 @@ public class DbManager {
         mRealm.beginTransaction();
         for (Job job : jobs) {
             JobDAO jobDAO = JobDAO.fromJob(job);
+            mRealm.copyToRealmOrUpdate(jobDAO);
         }
         mRealm.commitTransaction();
     }

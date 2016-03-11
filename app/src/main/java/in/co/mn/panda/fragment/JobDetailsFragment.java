@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import in.co.mn.panda.R;
-import in.co.mn.panda.model.Job;
+import in.co.mn.panda.db.JobDAO;
 
 public class JobDetailsFragment extends BaseFragment {
     private static final String ARG_JOB = "arg_job";
 
-    private Job mJob;
+    private JobDAO mJob;
 
     private OnFragmentInteractionListener mListener;
 
@@ -20,7 +20,7 @@ public class JobDetailsFragment extends BaseFragment {
         // Required empty public constructor
     }
 
-    public static JobDetailsFragment newInstance(Job job) {
+    public static JobDetailsFragment newInstance(JobDAO job) {
         JobDetailsFragment fragment = new JobDetailsFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_JOB, job);

@@ -10,8 +10,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import in.co.mn.panda.R;
-import in.co.mn.panda.model.Job;
+import in.co.mn.panda.db.JobDAO;
 import in.co.mn.panda.util.Utils;
 
 /**
@@ -19,7 +20,12 @@ import in.co.mn.panda.util.Utils;
  */
 public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.JobViewHolder> {
 
-    private List<Job> mJobs;
+    private List<JobDAO> mJobs;
+    private JobsAdapterListener mJobsAdapterListener;
+
+    public JobsAdapter(JobsAdapterListener listener) {
+        mJobsAdapterListener = listener;
+    }
 
     @Override
     public JobViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -29,8 +35,9 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.JobViewHolder>
 
     @Override
     public void onBindViewHolder(JobViewHolder holder, int position) {
-        Job job = mJobs.get(position);
+        JobDAO job = mJobs.get(position);
 
+        holder.pos = position;
         holder.customerTextView.setText(job.getCustomerName());
         holder.priceTextView.setText(job.getPrice());
         holder.timeTextView.setText(job.getOrderTime());
@@ -43,7 +50,9 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.JobViewHolder>
         return mJobs == null ? 0 : mJobs.size();
     }
 
-    public static class JobViewHolder extends RecyclerView.ViewHolder {
+    public class JobViewHolder extends RecyclerView.ViewHolder {
+
+        int pos;
 
         @Bind(R.id.customer)
         TextView customerTextView;
@@ -61,13 +70,23 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.JobViewHolder>
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+
+        @OnClick(R.id.job_item)
+        public void onJobClicked(){
+            JobDAO job = mJobs.get(pos);
+            mJobsAdapterListener.onJobSelected(job);
+        }
     }
 
-    public List<Job> getJobs() {
+    public List<JobDAO> getJobs() {
         return mJobs;
     }
 
-    public void setJobs(List<Job> jobs) {
+    public void setJobs(List<JobDAO> jobs) {
         this.mJobs = jobs;
+    }
+
+    public interface JobsAdapterListener {
+        void onJobSelected(JobDAO job);
     }
 }

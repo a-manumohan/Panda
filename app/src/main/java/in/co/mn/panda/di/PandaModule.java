@@ -57,7 +57,7 @@ public class PandaModule {
 
     @Provides
     @Singleton
-    public NetworkManager provideNetworkManager(Context context, PandaService pandaService, DbManager dbManager) {
-        return new NetworkManager(context, pandaService, dbManager);
+    public NetworkManager provideNetworkManager(Context context, PandaService pandaService) {
+        return new NetworkManager(context, pandaService);
     }
 }

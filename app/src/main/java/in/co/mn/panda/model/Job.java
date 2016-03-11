@@ -181,5 +181,5 @@ public class Job{
     public void setJobStreet(String jobStreet) {
         this.jobStreet = jobStreet;
     }
-    
+
 }

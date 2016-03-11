@@ -177,6 +177,22 @@ public class JobDAO extends RealmObject implements Parcelable{
 
     public static JobDAO fromJob(Job job) {
         JobDAO jobDAO = new JobDAO();
+        jobDAO.setCustomerName(job.getCustomerName());
+        jobDAO.setDistance(job.getDistance());
+        jobDAO.setExtras(job.getExtras());
+        jobDAO.setJobCity(job.getJobCity());
+        jobDAO.setJobDate(job.getJobDate());
+        jobDAO.setJobLatitude(job.getJobLatitude());
+        jobDAO.setJobLongitude(job.getJobLongitude());
+        jobDAO.setJobPostalCode(job.getJobPostalCode());
+        jobDAO.setJobStreet(job.getJobStreet());
+        jobDAO.setOrderDuration(job.getOrderDuration());
+        jobDAO.setOrderId(job.getOrderId());
+        jobDAO.setPaymentMethod(job.getPaymentMethod());
+        jobDAO.setPrice(job.getPrice());
+        jobDAO.setStatus(job.getStatus());
+        jobDAO.setRecurrency(job.getRecurrency());
+        jobDAO.setOrderTime(job.getOrderTime());
         return jobDAO;
     }
 

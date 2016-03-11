@@ -9,47 +9,47 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.Bind;
 import in.co.mn.panda.PandaApplication;
 import in.co.mn.panda.R;
 import in.co.mn.panda.adapter.JobsAdapter;
 import in.co.mn.panda.db.JobDAO;
-import in.co.mn.panda.network.NetworkManager;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
 public class JobsFragment extends BaseFragment {
+    private static final String ARG_JOBS = "arg_jobs";
 
     @Bind(R.id.jobs)
     RecyclerView mJobsRecyclerView;
-
-    @Inject
-    NetworkManager mNetworkManager;
 
     private JobsAdapter mJobsAdapter;
 
     private OnFragmentInteractionListener mListener;
 
-    private Subscription mJobsSubscription;
+    private List<JobDAO> mJobs;
 
     public JobsFragment() {
         // Required empty public constructor
     }
 
-    public static JobsFragment newInstance() {
-        return new JobsFragment();
+    public static JobsFragment newInstance(ArrayList<JobDAO> jobs) {
+        JobsFragment jobsFragment = new JobsFragment();
+        Bundle arguments = new Bundle();
+        arguments.putParcelableArrayList(ARG_JOBS, jobs);
+        jobsFragment.setArguments(arguments);
+        return jobsFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((PandaApplication)getActivity().getApplication()).getPandaComponent().inject(this);
+        ((PandaApplication) getActivity().getApplication()).getPandaComponent().inject(this);
+        if (getArguments() != null && savedInstanceState == null) {
+            mJobs = getArguments().getParcelableArrayList(ARG_JOBS);
+        }
     }
 
     @Override
@@ -63,47 +63,19 @@ public class JobsFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
-        fetchJobs();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-
-        if (mJobsSubscription != null) {
-            mJobsSubscription.unsubscribe();
-        }
     }
 
     private void init() {
-        mJobsAdapter = new JobsAdapter();
+        mJobsAdapter = new JobsAdapter(job -> mListener.jobSelected(job));
+        mJobsAdapter.setJobs(mJobs);
         mJobsRecyclerView.setAdapter(mJobsAdapter);
         mJobsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
-
-    private void fetchJobs() {
-        mJobsSubscription = mNetworkManager.getJobs()
-                                           .subscribeOn(Schedulers.newThread())
-                                           .observeOn(AndroidSchedulers.mainThread())
-                                           .subscribe(
-                                                   jobs -> {
-                                                       updateViews(jobs);
-                                                   },
-                                                   this::showRetryDialog,
-                                                   () -> {
-                                                   }
-                                           );
-
-    }
-
-    private void showRetryDialog(Throwable throwable) {
-
-    }
-
-    private void updateViews(List<JobDAO> jobs) {
-
-    }
-
 
     @Override
     public void onAttach(Context context) {
@@ -122,7 +94,19 @@ public class JobsFragment extends BaseFragment {
         mListener = null;
     }
 
-    public interface OnFragmentInteractionListener {
+    public void setJobs(List<JobDAO> jobs) {
+        mJobs = jobs;
+        updateViews(jobs);
+    }
 
+    private void updateViews(List<JobDAO> jobs) {
+        if (mJobsAdapter != null) {
+            mJobsAdapter.setJobs(jobs);
+            mJobsAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public interface OnFragmentInteractionListener {
+        void jobSelected(JobDAO jobDAO);
     }
 }
