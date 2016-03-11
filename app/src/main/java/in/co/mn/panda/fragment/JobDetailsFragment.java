@@ -2,15 +2,25 @@ package in.co.mn.panda.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import butterknife.Bind;
 import in.co.mn.panda.R;
 import in.co.mn.panda.db.JobDAO;
 
 public class JobDetailsFragment extends BaseFragment {
     private static final String ARG_JOB = "arg_job";
+
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @Bind(R.id.title)
+    TextView mJobTitleTextView;
 
     private JobDAO mJob;
 
@@ -44,6 +54,22 @@ public class JobDetailsFragment extends BaseFragment {
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setupViews();
+    }
+
+    private void setupViews() {
+        mToolbar.setNavigationIcon(R.drawable.ic_back);
+        mToolbar.setNavigationOnClickListener(v -> getFragmentManager().popBackStack());
+        if (mJob == null) {
+            return;
+        }
+        String jobTitle = mJob.getCustomerName() + " - " + mJob.getOrderId();
+        mJobTitleTextView.setText(jobTitle);
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
@@ -60,7 +86,7 @@ public class JobDetailsFragment extends BaseFragment {
         mListener = null;
     }
 
-    public void setJob(JobDAO job){
+    public void setJob(JobDAO job) {
         mJob = job;
         updateViews();
     }
