@@ -17,7 +17,7 @@ import butterknife.Bind;
 import in.co.mn.panda.PandaApplication;
 import in.co.mn.panda.R;
 import in.co.mn.panda.adapter.JobsAdapter;
-import in.co.mn.panda.model.Job;
+import in.co.mn.panda.db.JobDAO;
 import in.co.mn.panda.network.NetworkManager;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -87,8 +87,7 @@ public class JobsFragment extends BaseFragment {
                                            .observeOn(AndroidSchedulers.mainThread())
                                            .subscribe(
                                                    jobs -> {
-                                                       persistJobs(jobs);
-                                                       updateViews();
+                                                       updateViews(jobs);
                                                    },
                                                    this::showRetryDialog,
                                                    () -> {
@@ -101,13 +100,10 @@ public class JobsFragment extends BaseFragment {
 
     }
 
-    private void updateViews() {
+    private void updateViews(List<JobDAO> jobs) {
 
     }
 
-    private void persistJobs(List<Job> jobs) {
-
-    }
 
     @Override
     public void onAttach(Context context) {

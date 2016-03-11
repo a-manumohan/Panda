@@ -7,8 +7,11 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import in.co.mn.panda.Constants;
+import in.co.mn.panda.db.DbManager;
 import in.co.mn.panda.network.NetworkManager;
 import in.co.mn.panda.network.PandaService;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -40,8 +43,21 @@ public class PandaModule {
     }
 
     @Provides
+    public Realm provideRealmConfiguration(Context context) {
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(context)
+                .build();
+        return Realm.getInstance(realmConfiguration);
+    }
+
+    @Provides
     @Singleton
-    public NetworkManager provideNetworkManager(Context context, PandaService pandaService) {
-        return new NetworkManager(context, pandaService);
+    public DbManager provideDbManager(Realm realm, Context context) {
+        return new DbManager(realm, context);
+    }
+
+    @Provides
+    @Singleton
+    public NetworkManager provideNetworkManager(Context context, PandaService pandaService, DbManager dbManager) {
+        return new NetworkManager(context, pandaService, dbManager);
     }
 }

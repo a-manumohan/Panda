@@ -1,57 +1,49 @@
-package in.co.mn.panda.model;
+package in.co.mn.panda.db;
 
-import com.google.gson.annotations.SerializedName;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import in.co.mn.panda.model.Job;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 /**
- * Created by manuMohan on 10/03/2016.
+ * Created by manuMohan on 11/03/2016.
  */
-public class Job{
-    @SerializedName("status")
+public class JobDAO extends RealmObject implements Parcelable{
     private String status;
 
-    @SerializedName("customer_name")
     private String customerName;
 
-    @SerializedName("distance")
     private String distance;
 
-    @SerializedName("job_date")
     private String jobDate;
 
-    @SerializedName("extras")
     private String extras;
 
-    @SerializedName("order_duration")
     private double orderDuration;
 
-    @SerializedName("order_id")
+    @Required
+    @PrimaryKey
     private String orderId;
 
-    @SerializedName("order_time")
     private String orderTime;
 
-    @SerializedName("payment_method")
     private String paymentMethod;
 
-    @SerializedName("price")
     private String price;
 
-    @SerializedName("recurrency")
     private int recurrency;
 
-    @SerializedName("job_city")
     private String jobCity;
 
-    @SerializedName("job_latitude")
     private String jobLatitude;
 
-    @SerializedName("job_longitude")
     private String jobLongitude;
 
-    @SerializedName("job_postalcode")
     private String jobPostalCode;
 
-    @SerializedName("job_street")
     private String jobStreet;
 
     public String getStatus() {
@@ -181,5 +173,67 @@ public class Job{
     public void setJobStreet(String jobStreet) {
         this.jobStreet = jobStreet;
     }
-    
+
+
+    public static JobDAO fromJob(Job job) {
+        JobDAO jobDAO = new JobDAO();
+        return jobDAO;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.status);
+        dest.writeString(this.customerName);
+        dest.writeString(this.distance);
+        dest.writeString(this.jobDate);
+        dest.writeString(this.extras);
+        dest.writeDouble(this.orderDuration);
+        dest.writeString(this.orderId);
+        dest.writeString(this.orderTime);
+        dest.writeString(this.paymentMethod);
+        dest.writeString(this.price);
+        dest.writeInt(this.recurrency);
+        dest.writeString(this.jobCity);
+        dest.writeString(this.jobLatitude);
+        dest.writeString(this.jobLongitude);
+        dest.writeString(this.jobPostalCode);
+        dest.writeString(this.jobStreet);
+    }
+
+    public JobDAO() {
+    }
+
+    protected JobDAO(Parcel in) {
+        this.status = in.readString();
+        this.customerName = in.readString();
+        this.distance = in.readString();
+        this.jobDate = in.readString();
+        this.extras = in.readString();
+        this.orderDuration = in.readDouble();
+        this.orderId = in.readString();
+        this.orderTime = in.readString();
+        this.paymentMethod = in.readString();
+        this.price = in.readString();
+        this.recurrency = in.readInt();
+        this.jobCity = in.readString();
+        this.jobLatitude = in.readString();
+        this.jobLongitude = in.readString();
+        this.jobPostalCode = in.readString();
+        this.jobStreet = in.readString();
+    }
+
+    public static final Creator<JobDAO> CREATOR = new Creator<JobDAO>() {
+        public JobDAO createFromParcel(Parcel source) {
+            return new JobDAO(source);
+        }
+
+        public JobDAO[] newArray(int size) {
+            return new JobDAO[size];
+        }
+    };
 }

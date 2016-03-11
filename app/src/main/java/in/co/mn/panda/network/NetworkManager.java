@@ -6,7 +6,8 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
-import in.co.mn.panda.model.Job;
+import in.co.mn.panda.db.DbManager;
+import in.co.mn.panda.db.JobDAO;
 import rx.Observable;
 
 /**
@@ -16,13 +17,18 @@ import rx.Observable;
 public class NetworkManager {
     private Context mContext;
     private PandaService mPandaService;
+    private DbManager mDbManager;
 
-    public NetworkManager(Context context, PandaService pandaService) {
+    public NetworkManager(Context context, PandaService pandaService, DbManager dbManager) {
         mContext = context;
         mPandaService = pandaService;
+        mDbManager = dbManager;
     }
 
-    public Observable<List<Job>> getJobs() {
-        return mPandaService.getjobs();
+    public Observable<List<JobDAO>> getJobs() {
+        return mPandaService.getjobs().map(jobs -> {
+            mDbManager.persist(jobs);
+            return mDbManager.queryAllJobs();
+        });
     }
 }
