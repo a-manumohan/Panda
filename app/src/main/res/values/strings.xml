@@ -8,4 +8,10 @@
     <string name="recurrence_weekly">Weekly</string>
     <string name="recurrence_biweekly">Every 2 weeks</string>
     <string name="recurrence_monthly">Monthly</string>
+    <string name="title_jobs">Jobs</string>
+    <string name="error_no_jobs">No jobs to display!</string>
+    <string name="retry_request_title">Retry</string>
+    <string name="retry_request_message">Request to retrieve jobs failed. Do you want to retry?</string>
+    <string name="action_retry">RETRY</string>
+    <string name="action_cancel">Cancel</string>
 </resources>

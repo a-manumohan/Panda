@@ -60,6 +60,15 @@ public class JobDetailsFragment extends BaseFragment {
         mListener = null;
     }
 
+    public void setJob(JobDAO job){
+        mJob = job;
+        updateViews();
+    }
+
+    private void updateViews() {
+
+    }
+
     public interface OnFragmentInteractionListener {
     }
 }

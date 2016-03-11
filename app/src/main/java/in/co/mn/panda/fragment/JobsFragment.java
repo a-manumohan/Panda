@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,9 @@ public class JobsFragment extends BaseFragment {
 
     @Bind(R.id.jobs)
     RecyclerView mJobsRecyclerView;
+
+    @Bind(R.id.empty_view)
+    TextView mEmptyView;
 
     private JobsAdapter mJobsAdapter;
 
@@ -47,7 +51,7 @@ public class JobsFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((PandaApplication) getActivity().getApplication()).getPandaComponent().inject(this);
-        if (getArguments() != null && savedInstanceState == null) {
+        if (getArguments() != null) {
             mJobs = getArguments().getParcelableArrayList(ARG_JOBS);
         }
     }
@@ -75,6 +79,7 @@ public class JobsFragment extends BaseFragment {
         mJobsAdapter.setJobs(mJobs);
         mJobsRecyclerView.setAdapter(mJobsAdapter);
         mJobsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        updateEmptyView();
     }
 
     @Override
@@ -103,6 +108,15 @@ public class JobsFragment extends BaseFragment {
         if (mJobsAdapter != null) {
             mJobsAdapter.setJobs(jobs);
             mJobsAdapter.notifyDataSetChanged();
+            updateEmptyView();
+        }
+    }
+
+    private void updateEmptyView() {
+        if (mJobs == null || mJobs.size() == 0) {
+            mEmptyView.setVisibility(View.VISIBLE);
+        }else {
+            mEmptyView.setVisibility(View.GONE);
         }
     }
 
