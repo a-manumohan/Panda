@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,12 +51,12 @@ public class JobDetailsFragment extends BaseFragment {
     TextView mPostalCodeTextView;
     @Bind(R.id.recurrence)
     TextView mRecurrenceTextView;
+    @Bind(R.id.extras_label)
+    TextView mExtrasLabelTextView;
     @Bind(R.id.extras)
     TextView mExtrasTextView;
 
     private JobDAO mJob;
-
-    private OnFragmentInteractionListener mListener;
 
     public JobDetailsFragment() {
         // Required empty public constructor
@@ -108,7 +109,12 @@ public class JobDetailsFragment extends BaseFragment {
         mStreetTextView.setText(mJob.getJobStreet());
         mPostalCodeTextView.setText(mJob.getJobPostalCode());
         mRecurrenceTextView.setText(Utils.getRecurrenceString(getContext(), mJob.getRecurrency()));
-        mExtrasTextView.setText(mJob.getExtras());
+        if (TextUtils.isEmpty(mJob.getExtras())) {
+            mExtrasLabelTextView.setVisibility(View.GONE);
+        } else {
+            mExtrasLabelTextView.setVisibility(View.VISIBLE);
+            mExtrasTextView.setText(mJob.getExtras());
+        }
 
         try {
             String date = Utils.getFormattedDateString(getContext(), mJob.getJobDate());
@@ -117,26 +123,25 @@ public class JobDetailsFragment extends BaseFragment {
             Log.e(TAG, "invalid date " + mJob.getJobDate());
         }
 
-        double distance = Double.parseDouble(mJob.getDistance());
-        String distanceString = String.format(Locale.getDefault(), "%.2fKm", distance);
+        String distanceString;
+        try {
+            double distance = Double.parseDouble(mJob.getDistance());
+            distanceString = String.format(Locale.getDefault(), "%.2fKm", distance);
+        } catch (NumberFormatException e) {
+            distanceString = "0Km";
+        }
+
         mDisatnceTextView.setText(distanceString);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     public void setJob(JobDAO job) {
@@ -146,8 +151,5 @@ public class JobDetailsFragment extends BaseFragment {
 
     private void updateViews() {
 
-    }
-
-    public interface OnFragmentInteractionListener {
     }
 }

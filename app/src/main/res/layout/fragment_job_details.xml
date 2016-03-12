@@ -134,8 +134,8 @@
                         style="@style/content_job_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_normal"
-                        android:layout_marginStart="@dimen/margin_normal"
+                        android:layout_marginLeft="@dimen/margin_small"
+                        android:layout_marginStart="@dimen/margin_small"
                         tools:text="3.5"/>
                 </LinearLayout>
 
@@ -275,6 +275,7 @@
                         tools:text="Weekly"/>
 
                     <TextView
+                        android:id="@+id/extras_label"
                         style="@style/label_job_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

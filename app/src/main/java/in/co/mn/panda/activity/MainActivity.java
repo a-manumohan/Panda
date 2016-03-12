@@ -23,8 +23,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity implements
-        JobsFragment.OnFragmentInteractionListener,
-        JobDetailsFragment.OnFragmentInteractionListener {
+        JobsFragment.OnFragmentInteractionListener {
     private static final String TAG_JOBS_FRAGMENT = "jobs_fragment";
     private static final String TAG_JOB_DETAILS_FRAGMENT = "job_details_fragment";
 
@@ -119,9 +118,9 @@ public class MainActivity extends BaseActivity implements
         showJobsFragment(jobs);
     }
 
-    private void setJobsFragmentRefreshing(boolean refreshing){
+    private void setJobsFragmentRefreshing(boolean refreshing) {
         JobsFragment jobsFragment = (JobsFragment) getSupportFragmentManager().findFragmentByTag(TAG_JOBS_FRAGMENT);
-        if(jobsFragment == null){
+        if (jobsFragment == null) {
             return;
         }
         jobsFragment.setRefreshing(refreshing);
