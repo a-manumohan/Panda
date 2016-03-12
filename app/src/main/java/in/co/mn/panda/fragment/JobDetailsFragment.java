@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +13,43 @@ import android.widget.TextView;
 import butterknife.Bind;
 import in.co.mn.panda.R;
 import in.co.mn.panda.db.JobDAO;
+import in.co.mn.panda.util.Utils;
 
 public class JobDetailsFragment extends BaseFragment {
     private static final String ARG_JOB = "arg_job";
+    private static final String TAG = JobDetailsFragment.class.getSimpleName();
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
     @Bind(R.id.title)
     TextView mJobTitleTextView;
+    @Bind(R.id.job_status)
+    TextView mJobStatusTextView;
+    @Bind(R.id.customer_name)
+    TextView mCustomerNameTextView;
+    @Bind(R.id.job_date)
+    TextView mJobDateTextView;
+    @Bind(R.id.order_time)
+    TextView mOrderTimeTextView;
+    @Bind(R.id.order_duration)
+    TextView mOrderDurationTextView;
+    @Bind(R.id.order_price)
+    TextView mOrderPriceTextView;
+    @Bind(R.id.payment_method)
+    TextView mPaymentMethodTextView;
+    @Bind(R.id.job_city)
+    TextView mJobCityTextView;
+    @Bind(R.id.distance)
+    TextView mDisatnceTextView;
+    @Bind(R.id.street)
+    TextView mStreetTextView;
+    @Bind(R.id.postal_code)
+    TextView mPostalCodeTextView;
+    @Bind(R.id.recurrence)
+    TextView mRecurrenceTextView;
+    @Bind(R.id.extras)
+    TextView mExtrasTextView;
 
     private JobDAO mJob;
 
@@ -67,6 +96,25 @@ public class JobDetailsFragment extends BaseFragment {
         }
         String jobTitle = mJob.getCustomerName() + " - " + mJob.getOrderId();
         mJobTitleTextView.setText(jobTitle);
+        mJobStatusTextView.setText(mJob.getStatus());
+        mCustomerNameTextView.setText(mJob.getCustomerName());
+        mOrderTimeTextView.setText(mJob.getOrderTime());
+        mOrderDurationTextView.setText(mJob.getOrderDuration());
+        mOrderPriceTextView.setText(mJob.getPrice());
+        mPaymentMethodTextView.setText(mJob.getPaymentMethod());
+        mJobCityTextView.setText(mJob.getJobCity());
+        mDisatnceTextView.setText(mJob.getDistance());
+        mStreetTextView.setText(mJob.getJobStreet());
+        mPostalCodeTextView.setText(mJob.getJobPostalCode());
+        mRecurrenceTextView.setText(Utils.getRecurrenceString(getContext(), mJob.getRecurrency()));
+        mExtrasTextView.setText(mJob.getExtras());
+
+        try {
+            String date = Utils.getFormattedDateString(getContext(), mJob.getJobDate());
+            mJobDateTextView.setText(date);
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "invalid date " + mJob.getJobDate());
+        }
     }
 
     @Override

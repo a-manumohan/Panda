@@ -14,4 +14,15 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/color_title</item>
     </style>
+
+    <style name="label_job_detail">
+        <item name="android:textSize">@dimen/text_normal</item>
+        <item name="android:textColor">@color/label_job_detail</item>
+    </style>
+
+    <style name="content_job_detail">
+        <item name="android:textSize">@dimen/text_large</item>
+        <item name="android:textColor">@color/content_job_detail</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

@@ -14,4 +14,15 @@
     <string name="retry_request_message">Request to retrieve jobs failed. Do you want to retry?</string>
     <string name="action_retry">RETRY</string>
     <string name="action_cancel">Cancel</string>
+    <string name="label_customer_name">Customer Name</string>
+    <string name="label_date">Date</string>
+    <string name="label_order_time">Order Time</string>
+    <string name="label_price">Price</string>
+    <string name="label_payment_method">Payment Method</string>
+    <string name="label_city">City</string>
+    <string name="label_distance">Distance</string>
+    <string name="label_street">Street</string>
+    <string name="label_postal_code">Postal Code</string>
+    <string name="label_order_duration">Order Duration</string>
+    <string name="label_extras">Extras</string>
 </resources>

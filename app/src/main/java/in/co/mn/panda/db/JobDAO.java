@@ -22,7 +22,7 @@ public class JobDAO extends RealmObject implements Parcelable{
 
     private String extras;
 
-    private double orderDuration;
+    private String orderDuration;
 
     @Required
     @PrimaryKey
@@ -86,11 +86,11 @@ public class JobDAO extends RealmObject implements Parcelable{
         this.extras = extras;
     }
 
-    public double getOrderDuration() {
+    public String getOrderDuration() {
         return orderDuration;
     }
 
-    public void setOrderDuration(double orderDuration) {
+    public void setOrderDuration(String orderDuration) {
         this.orderDuration = orderDuration;
     }
 
@@ -208,7 +208,7 @@ public class JobDAO extends RealmObject implements Parcelable{
         dest.writeString(this.distance);
         dest.writeString(this.jobDate);
         dest.writeString(this.extras);
-        dest.writeDouble(this.orderDuration);
+        dest.writeString(this.orderDuration);
         dest.writeString(this.orderId);
         dest.writeString(this.orderTime);
         dest.writeString(this.paymentMethod);
@@ -230,7 +230,7 @@ public class JobDAO extends RealmObject implements Parcelable{
         this.distance = in.readString();
         this.jobDate = in.readString();
         this.extras = in.readString();
-        this.orderDuration = in.readDouble();
+        this.orderDuration = in.readString();
         this.orderId = in.readString();
         this.orderTime = in.readString();
         this.paymentMethod = in.readString();

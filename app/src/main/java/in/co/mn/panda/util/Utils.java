@@ -2,6 +2,9 @@ package in.co.mn.panda.util;
 
 import android.content.Context;
 
+import org.threeten.bp.ZonedDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
+
 import in.co.mn.panda.R;
 
 /**
@@ -21,5 +24,10 @@ public class Utils {
             default:
                 throw new IllegalArgumentException("Unknown recurrence " + recurrence);
         }
+    }
+
+    public static String getFormattedDateString(Context context, String dateString) {
+        ZonedDateTime dateTime = ZonedDateTime.parse(dateString, DateTimeFormatter.ISO_ZONED_DATE_TIME);
+        return dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
 }

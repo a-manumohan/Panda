@@ -22,7 +22,7 @@ public class Job{
     private String extras;
 
     @SerializedName("order_duration")
-    private double orderDuration;
+    private String orderDuration;
 
     @SerializedName("order_id")
     private String orderId;
@@ -94,13 +94,6 @@ public class Job{
         this.extras = extras;
     }
 
-    public double getOrderDuration() {
-        return orderDuration;
-    }
-
-    public void setOrderDuration(double orderDuration) {
-        this.orderDuration = orderDuration;
-    }
 
     public String getOrderId() {
         return orderId;
@@ -182,4 +175,11 @@ public class Job{
         this.jobStreet = jobStreet;
     }
 
+    public String getOrderDuration() {
+        return orderDuration;
+    }
+
+    public void setOrderDuration(String orderDuration) {
+        this.orderDuration = orderDuration;
+    }
 }
