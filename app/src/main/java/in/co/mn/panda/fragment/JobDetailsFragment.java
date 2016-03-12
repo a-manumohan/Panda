@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 import butterknife.Bind;
 import in.co.mn.panda.R;
 import in.co.mn.panda.db.JobDAO;
@@ -103,7 +105,6 @@ public class JobDetailsFragment extends BaseFragment {
         mOrderPriceTextView.setText(mJob.getPrice());
         mPaymentMethodTextView.setText(mJob.getPaymentMethod());
         mJobCityTextView.setText(mJob.getJobCity());
-        mDisatnceTextView.setText(mJob.getDistance());
         mStreetTextView.setText(mJob.getJobStreet());
         mPostalCodeTextView.setText(mJob.getJobPostalCode());
         mRecurrenceTextView.setText(Utils.getRecurrenceString(getContext(), mJob.getRecurrency()));
@@ -115,6 +116,10 @@ public class JobDetailsFragment extends BaseFragment {
         } catch (NumberFormatException e) {
             Log.e(TAG, "invalid date " + mJob.getJobDate());
         }
+
+        double distance = Double.parseDouble(mJob.getDistance());
+        String distanceString = String.format(Locale.getDefault(), "%.2fKm", distance);
+        mDisatnceTextView.setText(distanceString);
     }
 
     @Override
