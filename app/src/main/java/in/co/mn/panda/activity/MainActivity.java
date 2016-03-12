@@ -89,9 +89,11 @@ public class MainActivity extends BaseActivity implements
                                                    jobs -> {
                                                        mJobs = (ArrayList<JobDAO>) jobs;
                                                        updateViews(mJobs);
+                                                       setJobsFragmentRefreshing(false);
                                                    },
                                                    throwable -> {
                                                        mProgressBar.setVisibility(View.GONE);
+                                                       setJobsFragmentRefreshing(false);
                                                        showRetryDialog(throwable);
                                                    },
                                                    () -> mProgressBar.setVisibility(View.GONE)
@@ -117,9 +119,22 @@ public class MainActivity extends BaseActivity implements
         showJobsFragment(jobs);
     }
 
+    private void setJobsFragmentRefreshing(boolean refreshing){
+        JobsFragment jobsFragment = (JobsFragment) getSupportFragmentManager().findFragmentByTag(TAG_JOBS_FRAGMENT);
+        if(jobsFragment == null){
+            return;
+        }
+        jobsFragment.setRefreshing(refreshing);
+    }
+
     @Override
     public void jobSelected(JobDAO job) {
         showJobDetailsFragment(job);
+    }
+
+    @Override
+    public void refreshJobs() {
+        fetchJobs();
     }
 
     public void showJobsFragment(List<JobDAO> jobs) {

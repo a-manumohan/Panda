@@ -3,6 +3,7 @@ package in.co.mn.panda.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,6 +29,8 @@ public class JobsFragment extends BaseFragment {
 
     @Bind(R.id.empty_view)
     TextView mEmptyView;
+    @Bind(R.id.swipe_refresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     private JobsAdapter mJobsAdapter;
 
@@ -75,6 +78,7 @@ public class JobsFragment extends BaseFragment {
     }
 
     private void init() {
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mListener.refreshJobs());
         mJobsAdapter = new JobsAdapter(job -> mListener.jobSelected(job));
         mJobsAdapter.setJobs(mJobs);
         mJobsRecyclerView.setAdapter(mJobsAdapter);
@@ -104,6 +108,10 @@ public class JobsFragment extends BaseFragment {
         updateViews(jobs);
     }
 
+    public void setRefreshing(boolean refreshing){
+        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(refreshing));
+    }
+
     private void updateViews(List<JobDAO> jobs) {
         if (mJobsAdapter != null) {
             mJobsAdapter.setJobs(jobs);
@@ -122,5 +130,6 @@ public class JobsFragment extends BaseFragment {
 
     public interface OnFragmentInteractionListener {
         void jobSelected(JobDAO jobDAO);
+        void refreshJobs();
     }
 }
