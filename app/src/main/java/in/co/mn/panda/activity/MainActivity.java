@@ -67,8 +67,8 @@ public class MainActivity extends BaseActivity implements
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         if (mJobsSubscription != null) {
             mJobsSubscription.unsubscribe();
         }
