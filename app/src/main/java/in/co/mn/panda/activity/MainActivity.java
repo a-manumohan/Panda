@@ -88,14 +88,16 @@ public class MainActivity extends BaseActivity implements
                                                    jobs -> {
                                                        mJobs = (ArrayList<JobDAO>) jobs;
                                                        updateViews(mJobs);
-                                                       setJobsFragmentRefreshing(false);
                                                    },
                                                    throwable -> {
                                                        mProgressBar.setVisibility(View.GONE);
                                                        setJobsFragmentRefreshing(false);
                                                        showRetryDialog(throwable);
                                                    },
-                                                   () -> mProgressBar.setVisibility(View.GONE)
+                                                   () -> {
+                                                       mProgressBar.setVisibility(View.GONE);
+                                                       setJobsFragmentRefreshing(false);
+                                                   }
                                            );
 
     }
